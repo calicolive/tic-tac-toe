@@ -1,5 +1,6 @@
 let cells = document.querySelectorAll(".row > div");
 let results = document.querySelector("h2");
+let isPlaying = document.querySelector("h3");
 let plays = Array.from(cells);
 
 // Holds X players movements
@@ -22,10 +23,13 @@ let winningCombo = [
   [2, 4, 6],
 ];
 
+// Sets click events for each cell.
+
 for (let i = 0; i < cells.length; i++) {
   cells[i].addEventListener("click", cellClicked);
 }
 
+// function that gets called per click
 function cellClicked(event) {
   if (event.target.textContent == "") {
     event.target.textContent = player;
