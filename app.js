@@ -1,10 +1,16 @@
 let cells = document.querySelectorAll(".row > div");
+let results = document.querySelector("h2");
 let plays = Array.from(cells);
+
+// Holds X players movements
 let xChoice = [];
+// Holds O player movements
 let oChoice = [];
 let player = "X";
+
 let turn = 0;
 
+// Possible Winning Combinations
 let winningCombo = [
   [0, 1, 2],
   [3, 4, 5],
@@ -23,25 +29,42 @@ for (let i = 0; i < cells.length; i++) {
 function cellClicked(event) {
   if (event.target.textContent == "") {
     event.target.textContent = player;
+    turn++;
 
     if (player == "X") {
       xChoice.push(plays.indexOf(event.target));
-      // console.log(xChoice);
       checkWin();
       player = "O";
     } else {
       oChoice.push(plays.indexOf(event.target));
-      // console.log(oChoice);
+      checkWin();
       player = "X";
+    }
+
+    if (turn >= 9) {
+      results.innerHTML = "Draw!";
+      resetGame();
     }
   }
 }
 
+// Checks for the win
 function checkWin() {
-  for (let i = 0; i < winningCombo.length; i++) {
-    if (xChoice.includes(winningCombo[i]));
-    {
-      console.log("test");
+  for (i = 0; i < winningCombo.length; i++) {
+    if (
+      winningCombo[i].every((v) => oChoice.includes(v)) ||
+      winningCombo[i].every((v) => xChoice.includes(v))
+    ) {
+      results.innerHTML = `Player ${player} Wins!`;
+      resetGame();
     }
   }
+}
+
+// Resets the game
+
+function resetGame() {
+  setTimeout(function () {
+    window.location.reload();
+  }, 2000);
 }
